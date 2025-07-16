@@ -1,43 +1,85 @@
-print("\nCalculator App - Task 1\n\n")
+
+def display_menu():
+    print("\n" + "="*40)
+    print("         TERMINAL CALCULATOR")
+    print("="*40)
+    print("Select operation:")
+    print("1. Addition (+)")
+    print("2. Subtraction (-)")
+    print("3. Multiplication (*)")
+    print("4. Division (/)")
+    print("5. Modulo (%)")
+    print("6. Power (**)")
+    print("7. Exit")
+    print("="*40)
+
+def calculate(operation, num1, num2):
+    if operation == 1:
+        result = num1 + num2
+        symbol = "+"
+    elif operation == 2:
+        result = num1 - num2
+        symbol = "-"
+    elif operation == 3:
+        result = num1 * num2
+        symbol = "*"
+    elif operation == 4:
+        if num2 == 0:
+            print("Error: Division by zero is not allowed!")
+            return
+        result = num1 / num2
+        symbol = "/"
+    elif operation == 5:
+        if num2 == 0:
+            print("Error: Modulo by zero is not allowed!")
+            return
+        result = num1 % num2
+        symbol = "%"
+    elif operation == 6:
+        result = num1 ** num2
+        symbol = "**"
+    else:
+        print("Invalid operation.")
+        return
+
+    print(f"\n{num1} {symbol} {num2} = {result}")
+
+
+print("Welcome to the Terminal Calculator!")
+
 while True:
-    # Taking the user input
-    print("Enter the expression you want to be calculated (e.g., 3 + 5):")
-    user_input = input("Expression: ")
-
-    # Exit condition
-    if user_input.lower() in ["exit", "quit"]:
-        break
-
-    # Processing user input
-    input_list = user_input.split(" ")
-
-    if len(input_list) != 3:
-        print("Invalid format. Please enter in the form: number operator number (e.g., 5 + 3)")
-        continue
-
-    num1, operator, num2 = input_list
-
+    display_menu()
     try:
-        num1 = float(num1)
-        num2 = float(num2)
-
-        if operator == "+":
-            result = num1 + num2
-        elif operator == "-":
-            result = num1 - num2
-        elif operator == "*":
-            result = num1 * num2
-        elif operator == "/":
-            if num2 == 0:
-                print("Cannot divide by zero!")
-                continue
-            result = num1 / num2
-        else:
-            print("Unsupported operator. Use +, -, *, /")
-            continue
-
-        print("Result:", result)
-
+        choice = int(input("Enter your choice : "))
     except ValueError:
-        print("Invalid numbers. Please enter valid numeric values.")
-    print("\n")
+        print("Invalid input! Please enter a number between 1-7.")
+        continue
+    
+    if choice == 7:
+        print("\nThank you for using the Terminal Calculator!")
+        print("Goodbye!")
+        break
+    
+    if choice < 1 or choice > 7:
+        print("Invalid choice! Please select a number between 1 and 7.")
+        continue
+    
+    try:
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+    except ValueError:
+        print("Invalid input! Please enter valid numbers.")
+        continue
+    
+    calculate(choice, num1, num2)
+    
+    while True:
+        continue_calc = input("\nDo you want to perform another calculation? (y/n): ").lower().strip()
+        if continue_calc in ['y', 'yes']:
+            break
+        elif continue_calc in ['n', 'no']:
+            print("\nThank you for using the Terminal Calculator!")
+            print("Goodbye!")
+            exit()
+        else:
+            print("Please enter 'y' for yes or 'n' for no.")
